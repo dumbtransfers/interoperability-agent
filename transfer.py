@@ -1,5 +1,5 @@
 from web3 import Web3
-
+import os
 # Connect to Sepolia network
 infura_url = "https://sepolia.infura.io/v3/60cf1667ba5a45bc9f257d9e25e82241"  # Replace with your Infura Project ID
 web3 = Web3(Web3.HTTPProvider(infura_url))
@@ -62,7 +62,7 @@ contract = web3.eth.contract(address=contract_address, abi=contract_abi)
 
 # Your wallet address and private key
 wallet_address = "0x52eF0e850337ecEC348C41919862dBAac42F620B"  # Replace with your wallet address
-private_key = ""  # Replace with your wallet's private key
+private_key = os.getenv('PRIVATE_KEY')  # Replace with your wallet's private key
 
 
 usdc_abi = [
@@ -157,26 +157,26 @@ def send_tokens(destination_chain_selector, receiver, tokens_to_send_details, pa
 
     # Send the transaction
     txn_hash = web3.eth.send_raw_transaction(signed_txn.raw_transaction)
-    print(f"Transaction sent: {web3.to_hex(txn_hash)}")
+    return f"Transaction sent: https://sepolia.etherscan.io/tx/{web3.to_hex(txn_hash)}"
 
     # Wait for the transaction receipt
-    txn_receipt = web3.eth.wait_for_transaction_receipt(txn_hash)
-    print(f"Transaction receipt: {txn_receipt}")
+    # txn_receipt = web3.eth.wait_for_transaction_receipt(txn_hash)
+    # return(f"Transaction receipt: {txn_receipt}")
 
 # Example usage
-destination_chain_selector = 14767482510784806043  # Replace with your chain selector
-receiver = "0x52eF0e850337ecEC348C41919862dBAac42F620B"  # Replace with receiver address
-tokens_to_send_details = [
-    {
-        "token": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",  # Replace with the actual USDC token address on Sepolia
-        "amount": web3.to_wei(0.00001, 'mwei')  # USDC has 6 decimal places, so use 'mwei' for 100 USDC
-    }
-]
-pay_fees_in = 0  # Adjust based on your contract's expected input
+# destination_chain_selector = 14767482510784806043  # Replace with your chain selector
+# receiver = "0x52eF0e850337ecEC348C41919862dBAac42F620B"  # Replace with receiver address
+# tokens_to_send_details = [
+#     {
+#         "token": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",  # Replace with the actual USDC token address on Sepolia
+#         "amount": web3.to_wei(0.00001, 'mwei')  # USDC has 6 decimal places, so use 'mwei' for 100 USDC
+#     }
+# ]
+# pay_fees_in = 0  # Adjust based on your contract's expected input
 
-# usdc_contract = web3.eth.contract(address='0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238', abi=usdc_abi)
+# # usdc_contract = web3.eth.contract(address='0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238', abi=usdc_abi)
 
-# # Approve contract to spend tokens
-# usdc_contract.functions.approve(contract_address, web3.to_wei(1, 'mwei')).transact({'from': wallet_address})
+# # # Approve contract to spend tokens
+# # usdc_contract.functions.approve(contract_address, web3.to_wei(1, 'mwei')).transact({'from': wallet_address})
 
-send_tokens(destination_chain_selector, receiver, tokens_to_send_details, pay_fees_in)
+# send_tokens(destination_chain_selector, receiver, tokens_to_send_details, pay_fees_in)
