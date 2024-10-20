@@ -1,0 +1,43 @@
+[
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "destinationChainSelector",
+          "type": "uint64"
+        },
+        {
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Client.EVMTokenAmount[]",
+          "name": "tokensToSendDetails",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "enum BasicTokenSender.PayFeesIn",
+          "name": "payFeesIn",
+          "type": "uint8"
+        }
+      ],
+      "name": "send",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
+  
